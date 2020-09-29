@@ -88,6 +88,12 @@ Epoch 44
 605/605 [==============================] - 11562s 19s/step - loss: 1.7166 - hypno_output_loss: 0.5715 - status_output_loss: 0.6131 - hypno_output_sparse_categorical_accuracy: 0.6383 - status_output_binary_accuracy: 0.7099 - val_loss: 1.9058 - val_hypno_output_loss: 0.7449 - val_status_output_loss: 0.4899 - val_hypno_output_sparse_categorical_accuracy: 0.5636 - val_status_output_binary_accuracy: 0.8750
 Epoch 45
 605/605 [==============================] - 10457s 17s/step - loss: 1.7147 - hypno_output_loss: 0.5714 - status_output_loss: 0.6132 - hypno_output_sparse_categorical_accuracy: 0.6396 - status_output_binary_accuracy: 0.7025 - val_loss: 1.6800 - val_hypno_output_loss: 0.6187 - val_status_output_loss: 0.4966 - val_hypno_output_sparse_categorical_accuracy: 0.6315 - val_status_output_binary_accuracy: 0.8438
+Epoch 46
+605/605 [==============================] - 11352s 19s/step - loss: 1.7099 - hypno_output_loss: 0.5710 - status_output_loss: 0.6105 - hypno_output_sparse_categorical_accuracy: 0.6405 - status_output_binary_accuracy: 0.7041 - val_loss: 1.6179 - val_hypno_output_loss: 0.5926 - val_status_output_loss: 0.4795 - val_hypno_output_sparse_categorical_accuracy: 0.5983 - val_status_output_binary_accuracy: 0.8750
+Epoch 47
+605/605 [==============================] - 10059s 17s/step - loss: 1.7038 - hypno_output_loss: 0.5675 - status_output_loss: 0.6121 - hypno_output_sparse_categorical_accuracy: 0.6425 - status_output_binary_accuracy: 0.6950 - val_loss: 1.6141 - val_hypno_output_loss: 0.5854 - val_status_output_loss: 0.4914 - val_hypno_output_sparse_categorical_accuracy: 0.6194 - val_status_output_binary_accuracy: 0.8125
+Epoch 48
+605/605 [==============================] - 9999s 17s/step - loss: 1.6981 - hypno_output_loss: 0.5671 - status_output_loss: 0.6104 - hypno_output_sparse_categorical_accuracy: 0.6421 - status_output_binary_accuracy: 0.7103 - val_loss: 1.7448 - val_hypno_output_loss: 0.6134 - val_status_output_loss: 0.5748 - val_hypno_output_sparse_categorical_accuracy: 0.5858 - val_status_output_binary_accuracy: 0.8750
 
 
 
