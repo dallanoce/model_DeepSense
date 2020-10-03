@@ -98,6 +98,14 @@ Epoch 49
 605/605 [==============================] - 11450s 19s/step - loss: 1.6849 - hypno_output_loss: 0.5631 - status_output_loss: 0.6064 - hypno_output_sparse_categorical_accuracy: 0.6441 - status_output_binary_accuracy: 0.7281 - val_loss: 1.6475 - val_hypno_output_loss: 0.5973 - val_status_output_loss: 0.5099 - val_hypno_output_sparse_categorical_accuracy: 0.6310 - val_status_output_binary_accuracy: 0.7188
 Epoch 50
 605/605 [==============================] - 11268s 19s/step - loss: 1.6867 - hypno_output_loss: 0.5630 - status_output_loss: 0.6117 - hypno_output_sparse_categorical_accuracy: 0.6450 - status_output_binary_accuracy: 0.7145 - val_loss: 1.7019 - val_hypno_output_loss: 0.6426 - val_status_output_loss: 0.4846 - val_hypno_output_sparse_categorical_accuracy: 0.6001 - val_status_output_binary_accuracy: 0.8750
+Epoch 51
+605/605 [==============================] - 12650s 21s/step - loss: 1.6935 - hypno_output_loss: 0.5647 - status_output_loss: 0.6102 - hypno_output_sparse_categorical_accuracy: 0.6460 - status_output_binary_accuracy: 0.7087 - val_loss: 1.6827 - val_hypno_output_loss: 0.6099 - val_status_output_loss: 0.5143 - val_hypno_output_sparse_categorical_accuracy: 0.6456 - val_status_output_binary_accuracy: 0.8750
+Epoch 52
+605/605 [==============================] - 10861s 18s/step - loss: 1.6852 - hypno_output_loss: 0.5605 - status_output_loss: 0.6087 - hypno_output_sparse_categorical_accuracy: 0.6460 - status_output_binary_accuracy: 0.7264 - val_loss: 1.6918 - val_hypno_output_loss: 0.6318 - val_status_output_loss: 0.4894 - val_hypno_output_sparse_categorical_accuracy: 0.5870 - val_status_output_binary_accuracy: 0.8750
+
+
+
+
 
 
 
