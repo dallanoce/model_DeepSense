@@ -1,0 +1,212 @@
+#### Set the seed for random operations.
+# This let our experiments to be reproducible.
+SEED = 1234
+tf.random.set_seed(SEED)
+np.random.seed(SEED)
+
+EPOCH_LENGTH = 30
+
+SAMPLE_RATE = 250
+SAMPLE_RATE_AIRFLOW = 10
+SAMPLE_RATE_BODYPOSITION = 10
+
+
+ecg_path = '/content/SHHS_processed/ecgs/shhs2/'
+airflow_path = '/content/SHHS_processed/airflows/shhs2/'
+hypnogram_path = '/content/SHHS_processed/hypnogram/shhs2/'
+bp_path = '/content/SHHS_processed/body_position_encoded/shhs2/'
+heatlhy_path = '/content/SHHS_processed/'
+
+
+OUT_DIM = 4  # len(idDict)
+
+DATASET_OLD = 'df_all_checkpoint_4.csv'
+DATASET_NEW = 'analysis_all.csv'
+
+BATCH_SIZE = 4
+
+TEST_SIZE = 128
+
+TIME_STEPS = SAMPLE_RATE * EPOCH_LENGTH
+STEP = 1
+STAGES = 4
+
+
+class_weight = {0: 0.7,
+                1: 0.5,
+                2: 0.5,
+                3: 2,
+                4: 1.5,
+               }
+
+
+class_weight = [0.5,0.5,0.5,1.6,1.2]
+
+class_weights_status=[1.5,0.7]
+
+lossWeights = {'hypno_output': 1.8, 'status_output': 0.8}
+
+
+FILTER_BEFORE = 32
+FILTER_AFTER = 48
+
+load = False # load pre-trained model
+tb = False #tensorboard
+cp = True # checkpoint
+early_stop = False # early stoppin
+
+
+def deepSense_TD(shape_2,shape_3,shape_7,shape_8,shape_9,shape_10):
+
+
+
+    #INDIVIDUAL CONVOLUTION LAYERS
+    
+        #ECH CONV NET
+
+    input_ecg = Input(shape=[None, shape_2,shape_3,1])
+
+    conv1_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[32,1], activation='relu',strides =(3,1)))(input_ecg)
+    batch1_ecg = TimeDistributed(BatchNormalization())(conv1_ecg)
+
+
+    conv2_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[32,1], activation='relu',strides =(2,1)))(batch1_ecg)
+    batch2_ecg = TimeDistributed(BatchNormalization())(conv2_ecg)
+
+    conv3_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[32,1], activation='relu',strides =(2,1)))(batch2_ecg)
+    batch3_ecg = TimeDistributed(BatchNormalization())(conv3_ecg)
+
+    conv4_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[32,1], activation='relu',strides =(2,1)))(batch3_ecg)
+    batch4_ecg = TimeDistributed(BatchNormalization())(conv4_ecg)
+
+    conv5_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[16,1], activation='relu',strides =(2,1)))(batch4_ecg)
+    batch5_ecg = TimeDistributed(BatchNormalization())(conv5_ecg)
+
+    conv6_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch5_ecg)
+    batch6_ecg = TimeDistributed(BatchNormalization())(conv6_ecg)
+
+    conv7_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch6_ecg)
+    batch7_ecg = TimeDistributed(BatchNormalization())(conv7_ecg)
+    
+    conv8_ecg = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch7_ecg)
+    batch8_ecg = TimeDistributed(BatchNormalization())(conv8_ecg)
+    
+    #flat_ecg = TimeDistributed(Flatten())(batch8_ecg)
+
+    #flat_ecg = Reshape((-1,flat_ecg.shape[2],1,1))(flat_ecg)
+    
+    flat_ecg = Reshape((-1,batch8_ecg.shape[2],batch8_ecg.shape[4],1))(batch8_ecg)
+    
+    
+        #AIRFLOW CONV NET
+        
+    input_air = Input(shape=[None, shape_7,shape_8,1])
+        
+    conv1_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[8,1], activation='relu',strides =(2,1)))(input_air)
+    batch1_air = TimeDistributed(BatchNormalization())(conv1_air)
+    
+    conv2_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[8,1], activation='relu',strides =(1,1)))(batch1_air)
+    batch2_air = TimeDistributed(BatchNormalization())(conv2_air)
+
+    conv3_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[6,1], activation='relu',strides =(1,1)))(batch2_air)
+    batch3_air = TimeDistributed(BatchNormalization())(conv3_air)
+
+    conv4_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch3_air)
+    batch4_air = TimeDistributed(BatchNormalization())(conv4_air)
+    
+    conv5_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch4_air)
+    batch5_air = TimeDistributed(BatchNormalization())(conv5_air)
+    
+    conv6_air = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch5_air)
+    batch6_air = TimeDistributed(BatchNormalization())(conv6_air)
+    
+    #flat_air = TimeDistributed(Flatten())(batch4_air)
+
+    #flat_air = Reshape((-1,flat_air.shape[2],1,1))(flat_air)
+    
+    flat_air = Reshape((-1,batch6_air.shape[2],batch6_air.shape[4],1))(batch6_air)
+    
+    
+        #BODY POSITION CONV NET
+    
+    
+    input_bp = Input(shape=[None,shape_9,shape_10,1])
+    
+    conv1_bp = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[32,4], activation='relu',strides =(2,1)))(input_bp)
+    batch1_bp = TimeDistributed(BatchNormalization())(conv1_bp)
+    
+    conv2_bp = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch1_bp)
+    batch2_bp = TimeDistributed(BatchNormalization())(conv2_bp)
+
+    conv3_bp = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch2_bp)
+    batch3_bp = TimeDistributed(BatchNormalization())(conv3_bp)
+
+    conv4_bp = TimeDistributed(Conv2D(filters=FILTER_BEFORE, kernel_size=[4,1], activation='relu',strides =(1,1)))(batch3_bp)
+    batch4_bp = TimeDistributed(BatchNormalization())(conv4_bp)
+    
+    #flat_bp = TimeDistributed(Flatten())(batch4_bp)
+
+    #flat_bp = Reshape((-1,flat_bp.shape[2],1,1))(flat_bp)
+    
+    flat_bp = Reshape((-1,batch4_bp.shape[2],batch4_bp.shape[4],1))(batch4_bp)
+    
+    
+    
+    #CONCATENATION OF THE 2 NET
+    print(flat_ecg.shape)
+    print(flat_air.shape)
+    print(flat_bp.shape)
+    
+    merge = Concatenate(axis=-2)([flat_ecg,flat_air,flat_bp])
+
+
+    # MERGE CONVOLUTION LAYERS
+    print(merge.shape)
+
+    conv4 = TimeDistributed(Conv2D(filters=FILTER_AFTER, kernel_size=[4,FILTER_BEFORE * 3], activation='relu',strides=(1,1)))(merge)
+    batch4 = TimeDistributed(BatchNormalization())(conv4)
+
+    conv5 = TimeDistributed(Conv2D(filters=FILTER_AFTER, kernel_size=[4,1], activation='relu',strides=(2,1)))(batch4)
+    batch5 = TimeDistributed(BatchNormalization())(conv5)
+
+    conv6 = TimeDistributed(Conv2D(filters=FILTER_AFTER, kernel_size=[8,1], activation='relu',strides=(2,1)))(batch5)
+    batch6 = TimeDistributed(BatchNormalization())(conv6)
+    
+    conv7 = TimeDistributed(Conv2D(filters=FILTER_AFTER, kernel_size=[8,1], activation='relu',strides=(1,1)))(batch6)
+    batch7 = TimeDistributed(BatchNormalization())(conv7)
+    
+    conv8 = TimeDistributed(Conv2D(filters=FILTER_AFTER, kernel_size=[8,1], activation='relu',strides=(1,1)))(batch7)
+    batch8 = TimeDistributed(BatchNormalization())(conv8)
+
+
+    flat8 = TimeDistributed(Flatten())(batch8)
+
+
+    #RECURRENT LAYERS FOR HYPNOGRAM
+
+    gru1 = GRU(256, activation='relu',return_sequences=True, kernel_regularizer=l2(0.01))(flat8)
+    drop1 = Dropout(rate=0.4)(gru1)
+    batch1 = BatchNormalization()(drop1)
+
+    gru2 = GRU(128, activation='relu',return_sequences=True, kernel_regularizer=l2(0.01))(batch1)
+    drop2 = Dropout(rate=0.4)(gru2)
+    batch2 = BatchNormalization()(drop2)
+
+
+    dense_hypno = TimeDistributed(Dense(OUT_DIM + 1, activation='softmax',dtype=tf.float32),name = 'hypno_output')(batch2)
+    
+    
+    # RECURRENT LAYER FOR HEALTHY - UNHEALTHY
+    
+    gru3 = GRU(256, activation='relu',return_sequences=True, kernel_regularizer=l2(0.01))(flat8)
+    drop3 = Dropout(rate=0.4)(gru3)
+    batch3 = BatchNormalization()(drop3)
+
+    gru4 = GRU(128, activation='relu',return_sequences=False, kernel_regularizer=l2(0.01))(batch3)
+    drop4 = Dropout(rate=0.4)(gru4)
+    batch4 = BatchNormalization()(drop4)
+    
+    dense_healthy = Dense(1, activation='sigmoid',name = 'status_output',dtype=tf.float32)(batch4)
+    
+    
+    return [input_ecg,input_air,input_bp], [dense_hypno, dense_healthy]
