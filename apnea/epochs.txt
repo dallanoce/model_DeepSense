@@ -1,0 +1,8 @@
+Epoch 1/10
+586/586 [==============================] - 8210s 14s/step - loss: 6.5772 - binary_accuracy: 0.5444 - val_loss: 4.3549 - val_binary_accuracy: 0.6953
+Epoch 2/10
+586/586 [==============================] - 6664s 11s/step - loss: 3.5728 - binary_accuracy: 0.5904 - val_loss: 2.8749 - val_binary_accuracy: 0.7188
+Epoch 3/10
+586/586 [==============================] - 6510s 11s/step - loss: 2.4768 - binary_accuracy: 0.6122 - val_loss: 2.3582 - val_binary_accuracy: 0.3438
+Epoch 4/10
+586/586 [==============================] - 6259s 11s/step - loss: 1.8444 - binary_accuracy: 0.6224 - val_loss: 1.8584 - val_binary_accuracy: 0.6875
