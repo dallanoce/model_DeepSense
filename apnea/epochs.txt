@@ -6,3 +6,11 @@ Epoch 3/10
 586/586 [==============================] - 6510s 11s/step - loss: 2.4768 - binary_accuracy: 0.6122 - val_loss: 2.3582 - val_binary_accuracy: 0.3438
 Epoch 4/10
 586/586 [==============================] - 6259s 11s/step - loss: 1.8444 - binary_accuracy: 0.6224 - val_loss: 1.8584 - val_binary_accuracy: 0.6875
+Epoch 1/10
+586/586 [==============================] - 8315s 14s/step - loss: 1.4619 - binary_accuracy: 0.6280 - val_loss: 1.4316 - val_binary_accuracy: 0.7109
+Epoch 2/10
+586/586 [==============================] - 7098s 12s/step - loss: 1.2726 - binary_accuracy: 0.6305 - val_loss: 1.1842 - val_binary_accuracy: 0.6562
+Epoch 3/10
+586/586 [==============================] - 6979s 12s/step - loss: 1.1248 - binary_accuracy: 0.6263 - val_loss: 1.1087 - val_binary_accuracy: 0.7344
+Epoch 8
+586/586 [==============================] - 6957s 12s/step - loss: 1.0350 - binary_accuracy: 0.6267 - val_loss: 1.0321 - val_binary_accuracy: 0.6875
